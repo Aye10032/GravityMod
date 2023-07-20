@@ -1,5 +1,7 @@
 package com.aye10032.gravitymod;
 
+import com.aye10032.gravitymod.init.BlockRegistry;
+import com.aye10032.gravitymod.init.ItemRegistry;
 import com.aye10032.gravitymod.utils.Reference;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +34,9 @@ public class GravityMod {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+
+        BlockRegistry.registerBlocks();
+        ItemRegistry.registerItem();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
