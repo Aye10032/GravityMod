@@ -12,9 +12,9 @@ public class AntiGravityBlock extends Block {
 
     public AntiGravityBlock(){
         super(Properties.of(Material.HEAVY_METAL)
-                .lightLevel((s) -> 15)
-                .strength(1.5f)
+                .lightLevel((s) -> 2)
+                .strength(50f, 20f)
                 .sound(SoundType.STONE)
-                .noCollission());
+                .friction(1f));
     }
 }
