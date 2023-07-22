@@ -1,6 +1,8 @@
 package com.aye10032.gravitymod;
 
+import com.aye10032.gravitymod.event.BlockEventHandler;
 import com.aye10032.gravitymod.init.BlockRegistry;
+import com.aye10032.gravitymod.init.TileRegistry;
 import com.aye10032.gravitymod.init.ItemRegistry;
 import com.aye10032.gravitymod.utils.Reference;
 import com.mojang.logging.LogUtils;
@@ -37,6 +39,9 @@ public class GravityMod {
 
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItem();
+        TileRegistry.registerTiles();
+
+        BlockEventHandler.registerEvents();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
