@@ -16,13 +16,13 @@ public class BlockEventHandler {
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getWorld() != null) {
-            if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof AntiGravityBlock) {
-
-                assert Minecraft.getInstance().player != null;
-                Minecraft.getInstance().player.sendMessage(new TextComponent("Hello"), null);
-            }
-        }
+//        if (event.getWorld() != null) {
+//            if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof AntiGravityBlock) {
+//
+//                assert Minecraft.getInstance().player != null;
+//                Minecraft.getInstance().player.sendMessage(new TextComponent("Hello"), null);
+//            }
+//        }
     }
 
     public static void registerEvents() {
