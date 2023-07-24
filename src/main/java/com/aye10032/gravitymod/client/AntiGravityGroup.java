@@ -16,5 +16,5 @@ public class AntiGravityGroup extends CreativeModeTab {
         return new ItemStack(ItemRegistry.ANTI_GRAVITY_BLOCK.get());
     }
 
-    public static final AntiGravityGroup instance = new AntiGravityGroup(CreativeModeTab.TABS.length, "anti gravity mod");
+    public static final AntiGravityGroup instance = new AntiGravityGroup(CreativeModeTab.TABS.length, "anti_gravity_mod");
 }
