@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": { "model": "gravity_mod:block/anti_gravity_block" }
+    "lit=true": {
+      "model": "gravity_mod:block/anti_gravity_block"
+    },
+    "lit=false": {
+      "model": "gravity_mod:block/anti_gravity_block_on"
+    }
   }
 }
