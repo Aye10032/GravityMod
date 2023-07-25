@@ -8,8 +8,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import java.util.List;
 
@@ -30,6 +34,10 @@ public class AntiGravityTile extends TileBase {
         this.isActive = !this.isActive;
     }
 
+    public boolean getActive(){
+        return this.isActive;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, AntiGravityTile tile) {
         if (!level.isClientSide() && tile.isActive) {
             tile.timer++;
@@ -38,6 +46,7 @@ public class AntiGravityTile extends TileBase {
 
                 // only do this once per second
                 tile.hurtMobs();
+                Blocks.REDSTONE_LAMP.asItem();
 
             }
         }
