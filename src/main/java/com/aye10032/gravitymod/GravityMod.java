@@ -1,6 +1,6 @@
 package com.aye10032.gravitymod;
 
-import com.aye10032.gravitymod.event.BlockEventHandler;
+import com.aye10032.gravitymod.event.RenderEventHandler;
 import com.aye10032.gravitymod.init.BlockRegistry;
 import com.aye10032.gravitymod.init.TileRegistry;
 import com.aye10032.gravitymod.init.ItemRegistry;
@@ -41,7 +41,7 @@ public class GravityMod {
         ItemRegistry.registerItem();
         TileRegistry.registerTiles();
 
-        BlockEventHandler.registerEvents();
+        RenderEventHandler.registerEvents();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -70,16 +70,5 @@ public class GravityMod {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // Register a new block here
-            LOGGER.info("HELLO from Register Block");
-        }
     }
 }
