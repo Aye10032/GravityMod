@@ -1,6 +1,7 @@
 package com.aye10032.gravitymod.block;
 
 import com.aye10032.gravitymod.init.TileRegistry;
+import com.aye10032.gravitymod.item.ControllerItem;
 import com.aye10032.gravitymod.tiles.AntiGravityTile;
 import com.aye10032.gravitymod.utils.TickerUtils;
 import net.minecraft.core.BlockPos;
@@ -27,18 +28,19 @@ import org.jetbrains.annotations.Nullable;
 
 public class AntiGravityBlock extends Block implements EntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+
     public AntiGravityBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(LIT, false));
     }
 
-    public AntiGravityBlock(){
+    public AntiGravityBlock() {
         super(Properties.of(Material.GLASS, MaterialColor.DIAMOND)
                 .strength(50f, 20f)
                 .sound(SoundType.GLASS)
                 .friction(1f)
                 .noOcclusion()
-                .lightLevel((bState)-> bState.getValue(LIT) ? 15 : 0));
+                .lightLevel((bState) -> bState.getValue(LIT) ? 15 : 0));
         this.registerDefaultState(this.defaultBlockState().setValue(LIT, false));
     }
 
@@ -49,9 +51,9 @@ public class AntiGravityBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (!pLevel.isClientSide() && pHand == InteractionHand.MAIN_HAND){
+        if (!pLevel.isClientSide() && pHand == InteractionHand.MAIN_HAND) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
-            if (tile instanceof AntiGravityTile){
+            if (tile instanceof AntiGravityTile && pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
                 ((AntiGravityTile) tile).toggle();
 
                 pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);

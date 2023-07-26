@@ -1,7 +1,9 @@
 package com.aye10032.gravitymod;
 
+import com.aye10032.gravitymod.event.InputEventHandler;
 import com.aye10032.gravitymod.event.RenderEventHandler;
 import com.aye10032.gravitymod.init.BlockRegistry;
+import com.aye10032.gravitymod.init.EffectRegister;
 import com.aye10032.gravitymod.init.TileRegistry;
 import com.aye10032.gravitymod.init.ItemRegistry;
 import com.aye10032.gravitymod.utils.Reference;
@@ -40,8 +42,10 @@ public class GravityMod {
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItem();
         TileRegistry.registerTiles();
+        EffectRegister.registerEffects();
 
         RenderEventHandler.registerEvents();
+        InputEventHandler.registerEvents();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

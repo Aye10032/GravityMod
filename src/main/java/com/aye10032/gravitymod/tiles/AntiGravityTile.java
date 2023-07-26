@@ -1,5 +1,6 @@
 package com.aye10032.gravitymod.tiles;
 
+import com.aye10032.gravitymod.init.EffectRegister;
 import com.aye10032.gravitymod.init.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,10 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class AntiGravityTile extends TileBase {
 
     boolean isActive = true;
 
-    final int RANGE = 5;
+    int RANGE = 64;
 
     public AntiGravityTile(BlockPos pPos, BlockState pBlockState) {
         super(TileRegistry.ANTI_GRAVITY_BLOCK.get(), pPos, pBlockState);
@@ -34,7 +32,7 @@ public class AntiGravityTile extends TileBase {
         this.isActive = !this.isActive;
     }
 
-    public boolean getActive(){
+    public boolean getActive() {
         return this.isActive;
     }
 
@@ -45,14 +43,12 @@ public class AntiGravityTile extends TileBase {
                 tile.timer = 0;
 
                 // only do this once per second
-                tile.hurtMobs();
-                Blocks.REDSTONE_LAMP.asItem();
-
+                tile.lowGravity();
             }
         }
     }
 
-    private void hurtMobs() {
+    private void lowGravity() {
         BlockPos topCorner = this.worldPosition.offset(RANGE, RANGE, RANGE);
         BlockPos bottomCorner = this.worldPosition.offset(-RANGE, -RANGE, -RANGE);
         AABB box = new AABB(topCorner, bottomCorner);
@@ -60,8 +56,9 @@ public class AntiGravityTile extends TileBase {
         List<Entity> entities = this.level.getEntities(null, box);
         for (Entity target : entities) {
             if (target instanceof Player) {
-                ((Player) target).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 25, 2, true, false, false));
-                ((Player) target).addEffect(new MobEffectInstance(MobEffects.JUMP, 25, 2, true, false, false));
+                ((Player) target).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 25, 2, true, false, true));
+                ((Player) target).addEffect(new MobEffectInstance(MobEffects.JUMP, 25, 2, true, false, true));
+                ((Player) target).addEffect(new MobEffectInstance(EffectRegister.WEIGHTLESS.get(), 25, 2, true, false, true));
             }
         }
     }
@@ -70,11 +67,13 @@ public class AntiGravityTile extends TileBase {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         this.isActive = pTag.getBoolean("active");
+        this.RANGE = pTag.getInt("range");
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putBoolean("active", this.isActive);
+        pTag.putInt("range", this.RANGE);
     }
 }

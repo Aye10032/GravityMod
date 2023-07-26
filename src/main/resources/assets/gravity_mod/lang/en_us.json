@@ -1,5 +1,7 @@
 {
   "itemGroup.anti_gravity_mod": "Anti Gravity Mod",
 
-  "block.gravity_mod.anti_gravity_block": "Anti Gravity Core"
+  "block.gravity_mod.anti_gravity_block": "Anti Gravity Core",
+
+  "effect.gravity_mod.weightless": "Weightless"
 }
