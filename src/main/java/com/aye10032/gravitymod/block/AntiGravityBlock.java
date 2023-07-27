@@ -5,6 +5,7 @@ import com.aye10032.gravitymod.item.ControllerItem;
 import com.aye10032.gravitymod.tiles.AntiGravityTile;
 import com.aye10032.gravitymod.utils.TickerUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -35,7 +36,7 @@ public class AntiGravityBlock extends Block implements EntityBlock {
     }
 
     public AntiGravityBlock() {
-        super(Properties.of(Material.GLASS, MaterialColor.DIAMOND)
+        super(Properties.of(Material.GLASS)
                 .strength(50f, 20f)
                 .sound(SoundType.GLASS)
                 .friction(1f)
@@ -53,12 +54,16 @@ public class AntiGravityBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide() && pHand == InteractionHand.MAIN_HAND) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
-            if (tile instanceof AntiGravityTile && pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
-                ((AntiGravityTile) tile).toggle();
+            if (tile instanceof AntiGravityTile) {
+                if(pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
+                    ((AntiGravityTile) tile).toggle();
 
-                pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);
-                pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
+                    pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);
+                    pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    return InteractionResult.SUCCESS;
+                }else {
+                    pPlayer.sendMessage(new TextComponent("now range " + ((AntiGravityTile) tile).getRANGE()), null);
+                }
             }
         }
 

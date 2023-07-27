@@ -9,7 +9,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
@@ -36,6 +35,10 @@ public class AntiGravityTile extends TileBase {
         return this.isActive;
     }
 
+    public int getRANGE() {
+        return RANGE;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, AntiGravityTile tile) {
         if (!level.isClientSide() && tile.isActive) {
             tile.timer++;
@@ -56,9 +59,9 @@ public class AntiGravityTile extends TileBase {
         List<Entity> entities = this.level.getEntities(null, box);
         for (Entity target : entities) {
             if (target instanceof Player) {
-                ((Player) target).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 25, 2, true, false, true));
-                ((Player) target).addEffect(new MobEffectInstance(MobEffects.JUMP, 25, 2, true, false, true));
-                ((Player) target).addEffect(new MobEffectInstance(EffectRegister.WEIGHTLESS.get(), 25, 2, true, false, true));
+                ((Player) target).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 25, 2, false, false, false));
+                ((Player) target).addEffect(new MobEffectInstance(MobEffects.JUMP, 25, 2, false, false, false));
+                ((Player) target).addEffect(new MobEffectInstance(EffectRegister.WEIGHTLESS.get(), 25, 2, false, false, false));
             }
         }
     }
