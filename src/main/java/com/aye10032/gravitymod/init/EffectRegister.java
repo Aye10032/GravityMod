@@ -3,7 +3,6 @@ package com.aye10032.gravitymod.init;
 import com.aye10032.gravitymod.effect.WeightlessEffect;
 import com.aye10032.gravitymod.utils.Reference;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

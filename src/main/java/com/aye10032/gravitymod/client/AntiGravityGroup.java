@@ -1,6 +1,5 @@
 package com.aye10032.gravitymod.client;
 
-import com.aye10032.gravitymod.block.AntiGravityBlock;
 import com.aye10032.gravitymod.init.ItemRegistry;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;

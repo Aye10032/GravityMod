@@ -6,7 +6,6 @@ import com.aye10032.gravitymod.item.SwitchItem;
 import com.aye10032.gravitymod.tiles.AntiGravityTile;
 import com.aye10032.gravitymod.utils.TickerUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -38,7 +37,7 @@ public class AntiGravityBlock extends Block implements EntityBlock {
     }
 
     public AntiGravityBlock() {
-        super(Properties.of(Material.GLASS)
+        super(Properties.of(Material.GLASS, MaterialColor.DIAMOND)
                 .strength(50f, 20f)
                 .sound(SoundType.GLASS)
                 .friction(1f)
