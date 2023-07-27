@@ -53,28 +53,27 @@ public class AntiGravityBlock extends Block implements EntityBlock {
     }
 
 
-
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide() && pHand == InteractionHand.MAIN_HAND) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof AntiGravityTile) {
-                if(pPlayer.getItemInHand(pHand).getItem() instanceof SwitchItem) {
+                if (pPlayer.getItemInHand(pHand).getItem() instanceof SwitchItem) {
                     ((AntiGravityTile) tile).toggle();
 
                     pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);
                     pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    return InteractionResult.SUCCESS;
-                }else if (pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem){
+                } else if (pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
                     ((AntiGravityTile) tile).addRange(1);
                     pPlayer.sendMessage(
-                            new TranslatableComponent("info.gravity_mod.update_range",  ((AntiGravityTile) tile).getRANGE()),
-                            null);
-                }else {
+                            new TranslatableComponent("info.gravity_mod.update_range",
+                                    ((AntiGravityTile) tile).getRANGE()), null);
+                } else {
                     pPlayer.sendMessage(
-                            new TranslatableComponent("info.gravity_mod.update_range",  ((AntiGravityTile) tile).getRANGE()),
+                            new TranslatableComponent("info.gravity_mod.update_range", ((AntiGravityTile) tile).getRANGE()),
                             null);
                 }
+                return InteractionResult.SUCCESS;
             }
         }
 
