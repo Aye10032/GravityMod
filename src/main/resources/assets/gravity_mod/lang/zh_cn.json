@@ -3,5 +3,7 @@
 
   "block.gravity_mod.anti_gravity_block": "反重力核心",
 
+  "item.gravity_mod.controller": "失重立场控制器",
+
   "effect.gravity_mod.weightless": "失重"
 }

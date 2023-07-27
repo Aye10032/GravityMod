@@ -3,5 +3,7 @@
 
   "block.gravity_mod.anti_gravity_block": "Anti Gravity Core",
 
+  "item.gravity_mod.controller": "Controller",
+
   "effect.gravity_mod.weightless": "Weightless"
 }
