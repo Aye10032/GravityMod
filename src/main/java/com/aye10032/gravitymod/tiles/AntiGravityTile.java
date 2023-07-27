@@ -39,6 +39,15 @@ public class AntiGravityTile extends TileBase {
         return RANGE;
     }
 
+    public void addRange(int value){
+        if (this.RANGE == 128){
+            this.RANGE = 0;
+        }
+
+        int sum = this.RANGE + value;
+        this.RANGE = Math.min(sum, 128);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, AntiGravityTile tile) {
         if (!level.isClientSide() && tile.isActive) {
             tile.timer++;

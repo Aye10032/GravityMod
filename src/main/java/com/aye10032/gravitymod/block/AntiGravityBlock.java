@@ -2,10 +2,12 @@ package com.aye10032.gravitymod.block;
 
 import com.aye10032.gravitymod.init.TileRegistry;
 import com.aye10032.gravitymod.item.ControllerItem;
+import com.aye10032.gravitymod.item.SwitchItem;
 import com.aye10032.gravitymod.tiles.AntiGravityTile;
 import com.aye10032.gravitymod.utils.TickerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -50,19 +52,28 @@ public class AntiGravityBlock extends Block implements EntityBlock {
         super.createBlockStateDefinition(pBuilder.add(LIT));
     }
 
+
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide() && pHand == InteractionHand.MAIN_HAND) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof AntiGravityTile) {
-                if(pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
+                if(pPlayer.getItemInHand(pHand).getItem() instanceof SwitchItem) {
                     ((AntiGravityTile) tile).toggle();
 
                     pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);
-                    pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
                     return InteractionResult.SUCCESS;
+                }else if (pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem){
+                    ((AntiGravityTile) tile).addRange(1);
+                    pPlayer.sendMessage(
+                            new TranslatableComponent("info.gravity_mod.update_range",  ((AntiGravityTile) tile).getRANGE()),
+                            null);
                 }else {
-                    pPlayer.sendMessage(new TextComponent("now range " + ((AntiGravityTile) tile).getRANGE()), null);
+                    pPlayer.sendMessage(
+                            new TranslatableComponent("info.gravity_mod.update_range",  ((AntiGravityTile) tile).getRANGE()),
+                            null);
                 }
             }
         }

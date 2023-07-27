@@ -5,5 +5,9 @@
 
   "item.gravity_mod.controller": "失重立场控制器",
 
-  "effect.gravity_mod.weightless": "失重"
+  "effect.gravity_mod.weightless": "失重",
+
+  "info.gravity_mod.update_range": "当前范围调整为%1$s",
+
+  "info.gravity_mod.range": "当前范围为%1$s"
 }
