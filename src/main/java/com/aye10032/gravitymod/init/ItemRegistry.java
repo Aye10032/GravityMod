@@ -2,6 +2,7 @@ package com.aye10032.gravitymod.init;
 
 import com.aye10032.gravitymod.client.AntiGravityGroup;
 import com.aye10032.gravitymod.item.ControllerItem;
+import com.aye10032.gravitymod.item.SwitchItem;
 import com.aye10032.gravitymod.utils.Reference;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -16,6 +17,7 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MODID);
 
     public static final RegistryObject<Item> CONTROLLER = ITEMS.register("controller", ControllerItem::new);
+    public static final RegistryObject<Item> SWITCH = ITEMS.register("switch", SwitchItem::new);
     public static final RegistryObject<Item> ANTI_GRAVITY_BLOCK = ITEMS.register("anti_gravity_block",
             () -> new BlockItem(BlockRegistry.ANTI_GRAVITY_BLOCK.get(), new Item.Properties().tab(AntiGravityGroup.instance)));
 
