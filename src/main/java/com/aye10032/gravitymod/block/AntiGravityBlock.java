@@ -38,7 +38,7 @@ public class AntiGravityBlock extends Block implements EntityBlock {
 
     public AntiGravityBlock() {
         super(Properties.of(Material.GLASS, MaterialColor.DIAMOND)
-                .strength(50f, 20f)
+                .strength(15f, 15f)
                 .sound(SoundType.GLASS)
                 .friction(1f)
                 .noOcclusion()
