@@ -18,7 +18,7 @@ public class AntiGravityTile extends TileBase {
 
     private int timer = 0;
 
-    boolean isActive = true;
+    boolean isActive = false;
 
     int RANGE = 64;
 
