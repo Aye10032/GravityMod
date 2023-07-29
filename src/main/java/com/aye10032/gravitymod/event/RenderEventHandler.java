@@ -20,7 +20,4 @@ public class RenderEventHandler {
         });
     }
 
-    public static void registerEvents() {
-        EVENT_BUS.register(RenderEventHandler.class);
-    }
 }
