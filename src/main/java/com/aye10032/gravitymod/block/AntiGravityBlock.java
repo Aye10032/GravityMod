@@ -42,6 +42,7 @@ public class AntiGravityBlock extends Block implements EntityBlock {
                 .sound(SoundType.GLASS)
                 .friction(1f)
                 .noOcclusion()
+                .noCollission()
                 .lightLevel((bState) -> bState.getValue(LIT) ? 15 : 0));
         this.registerDefaultState(this.defaultBlockState().setValue(LIT, false));
     }
@@ -61,7 +62,7 @@ public class AntiGravityBlock extends Block implements EntityBlock {
                     ((AntiGravityTile) tile).toggle();
 
                     pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);
-                    pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
                 } else if (pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
                     ((AntiGravityTile) tile).addRange(1);
                     pPlayer.sendMessage(
