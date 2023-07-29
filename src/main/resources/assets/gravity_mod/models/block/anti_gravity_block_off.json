@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"9": "gravity_mod:block/anti_gravity_block_on",
+		"9": "gravity_mod:block/anti_gravity_block_off",
 		"particle": "gravity_mod:block/anti_gravity_block_on"
 	},
 	"elements": [
