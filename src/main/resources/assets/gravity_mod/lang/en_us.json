@@ -5,6 +5,8 @@
 
   "item.gravity_mod.controller": "Controller",
 
+  "item.gravity_mod.switch": "Switch",
+
   "effect.gravity_mod.weightless": "Weightless",
 
   "info.gravity_mod.update_range": "range update to %1$s",
