@@ -1,5 +1,6 @@
 package com.aye10032.gravitymod.tiles;
 
+import com.aye10032.gravitymod.block.AntiGravityBlock;
 import com.aye10032.gravitymod.init.EffectRegister;
 import com.aye10032.gravitymod.init.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -36,7 +37,7 @@ public class AntiGravityTile extends TileBase {
     }
 
     public int getRANGE() {
-        return RANGE;
+        return RANGE * 2;
     }
 
     public void addRange(int value){
@@ -55,17 +56,17 @@ public class AntiGravityTile extends TileBase {
                 tile.timer = 0;
 
                 // only do this once per second
-                tile.lowGravity();
+                tile.lowGravity(tile);
             }
         }
     }
 
-    private void lowGravity() {
-        BlockPos topCorner = this.worldPosition.offset(RANGE, RANGE, RANGE);
-        BlockPos bottomCorner = this.worldPosition.offset(-RANGE, -RANGE, -RANGE);
+    private void lowGravity(AntiGravityTile tile) {
+        BlockPos topCorner = tile.worldPosition.offset(tile.RANGE, tile.RANGE, tile.RANGE);
+        BlockPos bottomCorner = tile.worldPosition.offset(-tile.RANGE, -tile.RANGE, -tile.RANGE);
         AABB box = new AABB(topCorner, bottomCorner);
 
-        List<Entity> entities = this.level.getEntities(null, box);
+        List<Entity> entities = tile.level.getEntities(null, box);
         for (Entity target : entities) {
             if (target instanceof Player) {
                 ((Player) target).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 25, 2, false, false, false));
@@ -84,8 +85,8 @@ public class AntiGravityTile extends TileBase {
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
         pTag.putBoolean("active", this.isActive);
         pTag.putInt("range", this.RANGE);
+        super.saveAdditional(pTag);
     }
 }

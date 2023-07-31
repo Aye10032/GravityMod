@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -55,25 +57,25 @@ public class AntiGravityBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (!pLevel.isClientSide() && pHand == InteractionHand.MAIN_HAND) {
-            BlockEntity tile = pLevel.getBlockEntity(pPos);
-            if (tile instanceof AntiGravityTile) {
+        BlockEntity tile = pLevel.getBlockEntity(pPos);
+        if (tile instanceof AntiGravityTile && pHand == InteractionHand.MAIN_HAND) {
+            Item item = pPlayer.getItemInHand(pHand).getItem();
+
+            if (!pLevel.isClientSide()) {
                 if (pPlayer.getItemInHand(pHand).getItem() instanceof SwitchItem) {
                     ((AntiGravityTile) tile).toggle();
+                    pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 3);
+                }
+            }
 
-                    pLevel.setBlock(pPos, pState.setValue(LIT, ((AntiGravityTile) tile).getActive()), 2);
+            if (pLevel.isClientSide()) {
+                if (item instanceof SwitchItem) {
                     pLevel.playSound(pPlayer, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                } else if (pPlayer.getItemInHand(pHand).getItem() instanceof ControllerItem) {
-                    ((AntiGravityTile) tile).addRange(1);
+                } else if (!(item instanceof ControllerItem)) {
                     pPlayer.sendMessage(
-                            new TranslatableComponent("info.gravity_mod.update_range",
-                                    ((AntiGravityTile) tile).getRANGE()), null);
-                } else {
-                    pPlayer.sendMessage(
-                            new TranslatableComponent("info.gravity_mod.update_range", ((AntiGravityTile) tile).getRANGE()),
+                            new TranslatableComponent("info.gravity_mod.range", ((AntiGravityTile) tile).getRANGE()),
                             null);
                 }
-                return InteractionResult.SUCCESS;
             }
         }
 

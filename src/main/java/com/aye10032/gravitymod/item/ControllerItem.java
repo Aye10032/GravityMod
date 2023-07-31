@@ -34,15 +34,23 @@ public class ControllerItem extends Item {
         InteractionHand hand = pContext.getHand();
         BlockPos pos = pContext.getClickedPos();
 
-        if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            BlockEntity tile = level.getBlockEntity(pos);
-            if (tile instanceof AntiGravityTile && Objects.requireNonNull(player).isShiftKeyDown()) {
+        BlockEntity tile = level.getBlockEntity(pos);
+
+        if (tile instanceof AntiGravityTile&& hand == InteractionHand.MAIN_HAND) {
+            assert player != null;
+            if (player.isShiftKeyDown()){
                 ((AntiGravityTile) tile).addRange(10);
+            }else {
+                ((AntiGravityTile) tile).addRange(1);
+            }
+
+            if (level.isClientSide ) {
                 player.sendMessage(
                         new TranslatableComponent("info.gravity_mod.update_range",
                                 ((AntiGravityTile) tile).getRANGE()), null);
             }
         }
+
         return super.useOn(pContext);
     }
 }
